@@ -1,5 +1,7 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
+import { configDotenv } from "dotenv";
+import jwt from 'jsonwebtoken';
 
 export const registerUser = async (req, res) => {
     const { username, password, email } = req.body;
@@ -40,10 +42,15 @@ export const login = async (req, res) => {
         }
         const comparePassword = await bcrypt.compare(password, searchUser.password);
         if (!comparePassword) {
-            res.status(400).json({ message: "Invalid password"});
+            res.status(400).json({ message: "Invalid password" });
         }
 
-        res.status(200).json({ message: "Success "});
+        const secret = process.env.JWT_SECRET;
+        const token = jwt.sign({
+            subject: username
+          }, secret, { expiresIn: 60 * 60 });
+        res.status(200).json({ message: "Login successful", token});
+
 
     } catch (error) {
         res.status(500).json({ message: "Server error"});
