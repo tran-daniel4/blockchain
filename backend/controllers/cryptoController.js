@@ -2,7 +2,7 @@ import Crypto from "../models/cryptoModel.js";
 import User from "../models/userModel.js";
 import axios from "axios";
 
-const getCrypto = async (req, res) => {
+export const getCrypto = async (req, res) => {
     try {
         const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd');
 
@@ -28,5 +28,3 @@ const getCrypto = async (req, res) => {
         return res.status(500).json({ message: "Unable to fetch cryptocurrency data" });
     }
 }
-
-export default getCrypto;
