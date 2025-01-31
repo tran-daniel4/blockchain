@@ -11,7 +11,7 @@ function Login({ handleSignUp }: {handleSignUp: () => void}) {
         e.preventDefault();
 
         try {
-            const response = await axios.post('/api/login', { inputUser, inputPass });
+            const response = await axios.post('/api/login', { username: inputUser, password: inputPass });
             console.log('Successfully logged in', response.data);
         } catch (error) {
             console.error('Error has occurred');
@@ -51,7 +51,7 @@ function Login({ handleSignUp }: {handleSignUp: () => void}) {
               <div className="flex items-center justify-between mb-6">
                 <button
                   className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  type="submit"
+                  type="button"
                   onClick={handleLogin}
                 >
                   Sign In

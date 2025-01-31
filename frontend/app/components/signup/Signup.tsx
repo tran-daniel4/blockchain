@@ -43,6 +43,8 @@ function Signup({ handleLogin }: { handleLogin: () => void }) {
             id="email"
             type="email"
             placeholder="Email"
+            value={inputEmail}
+            onChange= {(e) => setInputEmail(e.target.value)}
           />
         </div>
         <div className="mb-6">
@@ -54,6 +56,8 @@ function Signup({ handleLogin }: { handleLogin: () => void }) {
             id="password"
             type="password"
             placeholder="Password"
+            value={inputPass}
+            onChange= {(e) => setInputPass(e.target.value)}
           />
         </div>
         <div className="text-center mb-4">
