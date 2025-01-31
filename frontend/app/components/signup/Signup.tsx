@@ -1,7 +1,22 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 function Signup({ handleLogin }: { handleLogin: () => void }) {
+  const [ inputUser, setInputUser ] = useState('');
+  const [ inputPass, setInputPass ] = useState('');
+  const [ inputEmail, setInputEmail ] = useState('');
+
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('/api/signup', {inputUser, inputPass, inputEmail});
+      console.log('Successfully signed up', response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
       <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
@@ -15,6 +30,8 @@ function Signup({ handleLogin }: { handleLogin: () => void }) {
             id="username"
             type="text"
             placeholder="Username"
+            value={inputUser}
+            onChange= {(e) => setInputUser(e.target.value)}
           />
         </div>
         <div className="mb-4">
@@ -42,7 +59,8 @@ function Signup({ handleLogin }: { handleLogin: () => void }) {
         <div className="text-center mb-4">
           <button
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="button"
+            type="submit"
+            onClick={handleSignUp}
           >
             Sign Up
           </button>

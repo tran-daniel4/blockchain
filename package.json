@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start:backend": "nodemon backend/index.js",
-    "start:frontend": "npm run --prefix frontend start",
+    "start:frontend": "npm run --prefix frontend dev",
     "start:all": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

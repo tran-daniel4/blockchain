@@ -1,9 +1,24 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react'
+import { useState } from 'react';
+import axios from 'axios';
 
 function Login({ handleSignUp }: {handleSignUp: () => void}) {
+    const [ inputUser, setInputUser ] = useState('');
+    const [ inputPass, setInputPass ] = useState('');
+    
+    const handleLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post('/api/login', { inputUser, inputPass });
+            console.log('Successfully logged in', response.data);
+        } catch (error) {
+            console.error('Error has occurred');
+        }
+    }
 
     return (
-
           <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
             <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
             <form>
@@ -16,6 +31,8 @@ function Login({ handleSignUp }: {handleSignUp: () => void}) {
                   id="username"
                   type="text"
                   placeholder="Username"
+                  value= {inputUser}
+                  onChange= {(e) => setInputUser(e.target.value)}
                 />
               </div>
               <div className="mb-6">
@@ -27,12 +44,15 @@ function Login({ handleSignUp }: {handleSignUp: () => void}) {
                   id="password"
                   type="password"
                   placeholder="Password"
+                  value= {inputPass}
+                  onChange= {(e) => setInputPass(e.target.value)}
                 />
               </div>
               <div className="flex items-center justify-between mb-6">
                 <button
                   className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  type="button"
+                  type="submit"
+                  onClick={handleLogin}
                 >
                   Sign In
                 </button>
