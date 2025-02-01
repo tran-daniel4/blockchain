@@ -10,7 +10,7 @@ function Signup({ handleLogin }: { handleLogin: () => void }) {
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/signup', {inputUser, inputPass, inputEmail});
+      const response = await axios.post('http://localhost:5000/api/signup', {inputUser, inputPass, inputEmail});
       console.log('Successfully signed up', response.data);
     } catch (error) {
       console.error(error);

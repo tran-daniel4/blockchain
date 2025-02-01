@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from 'jsonwebtoken';
+import router from "../routes/userRoutes.js";
 
 export const registerUser = async (req, res) => {
     const { username, password, email } = req.body;
@@ -49,6 +50,8 @@ export const login = async (req, res) => {
             subject: searchUser._id,
             username: searchUser.username
           }, secret, { expiresIn: "1h" });
+
+        
         return res.status(200).json({ message: "Login successful", token});
 
 

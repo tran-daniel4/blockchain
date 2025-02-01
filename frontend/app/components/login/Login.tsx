@@ -2,17 +2,20 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 function Login({ handleSignUp }: {handleSignUp: () => void}) {
     const [ inputUser, setInputUser ] = useState('');
     const [ inputPass, setInputPass ] = useState('');
+    const router = useRouter();
     
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('/api/login', { username: inputUser, password: inputPass });
+            const response = await axios.post('http://localhost:5000/api/login', { username: inputUser, password: inputPass });
             console.log('Successfully logged in', response.data);
+            router.push('./home');
         } catch (error) {
             console.error('Error has occurred');
         }
