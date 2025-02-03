@@ -15,6 +15,7 @@ function Login({ handleSignUp }: {handleSignUp: () => void}) {
         try {
             const response = await axios.post('http://localhost:5000/api/login', { username: inputUser, password: inputPass });
             console.log('Successfully logged in', response.data);
+            localStorage.setItem("token", response.data.token);
             router.push('./home');
         } catch (error) {
             console.error('Error has occurred');
