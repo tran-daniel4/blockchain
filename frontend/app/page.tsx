@@ -3,19 +3,23 @@ import Image from "next/image";
 import Navbar from "./components/navbar/Navbar";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function App() {
   const router = useRouter();
 
   useEffect(() => {
-    const token  = localStorage.getItem('token');
-    if (token) {
-      router.push('/home');
-    } else {
-      router.push('/authentication');
-    }
+    const checkAuth = async () => {
+      try {
+        await axios.get('http://localhost:5000/api/checkToken', { withCredentials: true });
+        router.push('/home');
+      } catch (error) {
+        router.push('/authentication');
+      }
+    };
 
-  })
+    checkAuth();
+  }, []);
   return (
     <div>
     </div>

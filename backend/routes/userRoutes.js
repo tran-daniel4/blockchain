@@ -1,5 +1,5 @@
 import express from "express";
-import { registerUser, login, logout } from "../controllers/userController.js";
+import { registerUser, login, logout, checkToken } from "../controllers/userController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -13,5 +13,7 @@ router.get("/profile", authMiddleware, (req, res) => {
 });
 
 router.post("/logout", logout);
+
+router.get("/checkToken", checkToken);
 
 export default router;

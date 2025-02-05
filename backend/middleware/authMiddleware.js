@@ -1,20 +1,16 @@
 import jwt from "jsonwebtoken";
 
-export const authMiddleware = async (req, res, next) => {
-    const token = req.header("Authorization").slice(7); // Due to "Bearer " in the token
-
+export const authMiddleware = (req, res, next) => {
+    const token = req.cookies.token; 
     if (!token) {
-        return res.status(401).json({ message: "Access denied, no token found "});
+        return res.status(401).json({ message: "No token found" });
     }
-    try {
-        const secret = process.env.JWT_SECRET;
-        const verify = jwt.verify(token, secret);
-        req.user = verify;
-    
-        next();
 
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded;
+        next();
     } catch (error) {
-        console.error(error.stack);
-        return res.status(400).json({ message: "Unable to verify token"});
+        return res.status(403).json({ message: "Invalid token" });
     }
-}
+};

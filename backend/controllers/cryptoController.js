@@ -4,15 +4,14 @@ import axios from "axios";
 
 export const getCrypto = async (req, res) => {
     try {
-        const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd');
-
+        const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&page=1&price_change_percentage=1h%2C7d');
         const coins = response.data.map((coin) => ({
             id: coin.id,
             symbol: coin.symbol,
             image: coin.image,
             current_price: coin.current_price ?? 0,
             priceChange1h: coin.price_change_percentage_1h_in_currency ?? 0,
-            priceChange24h: coin.price_change_percentage_24h_in_currency ?? 0,
+            priceChange24h: coin.price_change_percentage_24h ?? 0,
             priceChange7d: coin.price_change_percentage_7d_in_currency ?? 0,
             market_cap: coin.market_cap ?? 0,
             total_volume: coin.total_volume ?? 0,

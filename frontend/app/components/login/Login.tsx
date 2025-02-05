@@ -7,18 +7,20 @@ import { useRouter } from 'next/navigation';
 function Login({ handleSignUp }: {handleSignUp: () => void}) {
     const [ inputUser, setInputUser ] = useState('');
     const [ inputPass, setInputPass ] = useState('');
+    const [ error, setError ] = useState('');
     const router = useRouter();
     
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError('');
 
         try {
-            const response = await axios.post('http://localhost:5000/api/login', { username: inputUser, password: inputPass });
+            const response = await axios.post('http://localhost:5000/api/login', { username: inputUser, password: inputPass }, { withCredentials: true });
             console.log('Successfully logged in', response.data);
-            localStorage.setItem("token", response.data.token);
             router.push('./home');
-        } catch (error) {
-            console.error('Error has occurred');
+        } catch (error: any) {
+          setError(error.response?.data?.message || 'Login failed. Please try again.');
+          console.error('Error has occurred', error);
         }
     }
 

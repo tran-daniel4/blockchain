@@ -49,12 +49,15 @@ export const login = async (req, res) => {
         const token = jwt.sign({
             subject: searchUser._id,
             username: searchUser.username
-          }, secret, { expiresIn: "1h" });
+          }, secret, { expiresIn: "15m" });
 
-        
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production", 
+            sameSite: "strict",
+            maxAge: 15 * 60 * 1000,
+        });
         return res.status(200).json({ message: "Login successful", token});
-
-
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Server error" });
@@ -62,5 +65,18 @@ export const login = async (req, res) => {
 }
 
 export const logout = async (req, res) => {
-    
+    res.clearCookie("token");
+    res.status(200).json({ message: "Successfully logged out" });
+}
+
+export const checkToken = async (req, res) => {
+    try {
+        const token = req.cookies.token;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (decoded) {
+            return res.status(200).json({ message: "Directing to homepage..."});
+        }
+    } catch (error) {
+        return res.status(401).json({ message: "Directing to authentication..."});
+    }
 }
