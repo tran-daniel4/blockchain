@@ -15,10 +15,9 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    tracked_cryptos: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Crypto"
-    }
+    tracked_cryptos: [{
+        type: String,
+    }],
 })
 
 const User = new mongoose.model("User", userSchema);

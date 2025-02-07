@@ -3,15 +3,16 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function Signup({ handleLogin }: { handleLogin: () => void }) {
-  const [ inputUser, setInputUser ] = useState('');
-  const [ inputPass, setInputPass ] = useState('');
-  const [ inputEmail, setInputEmail ] = useState('');
+  const [ username, setUsername ] = useState('');
+  const [ password, setPassword ] = useState('');
+  const [ email, setEmail ] = useState('');
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/signup', {inputUser, inputPass, inputEmail});
+      const response = await axios.post('http://localhost:5000/api/signup', { username, password, email });
       console.log('Successfully signed up', response.data);
+      handleLogin();
     } catch (error) {
       console.error(error);
     }
@@ -30,8 +31,9 @@ function Signup({ handleLogin }: { handleLogin: () => void }) {
             id="username"
             type="text"
             placeholder="Username"
-            value={inputUser}
-            onChange= {(e) => setInputUser(e.target.value)}
+            value={username}
+            onChange= {(e) => setUsername(e.target.value)}
+            autoComplete="off"
           />
         </div>
         <div className="mb-4">
@@ -43,8 +45,9 @@ function Signup({ handleLogin }: { handleLogin: () => void }) {
             id="email"
             type="email"
             placeholder="Email"
-            value={inputEmail}
-            onChange= {(e) => setInputEmail(e.target.value)}
+            value={email}
+            onChange= {(e) => setEmail(e.target.value)}
+            autoComplete="off"
           />
         </div>
         <div className="mb-6">
@@ -56,8 +59,9 @@ function Signup({ handleLogin }: { handleLogin: () => void }) {
             id="password"
             type="password"
             placeholder="Password"
-            value={inputPass}
-            onChange= {(e) => setInputPass(e.target.value)}
+            value={password}
+            onChange= {(e) => setPassword(e.target.value)}
+            autoComplete="off"
           />
         </div>
         <div className="text-center mb-4">

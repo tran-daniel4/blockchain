@@ -19,7 +19,7 @@ function Login({ handleSignUp }: {handleSignUp: () => void}) {
             console.log('Successfully logged in', response.data);
             router.push('./home');
         } catch (error: any) {
-          setError(error.response?.data?.message || 'Login failed. Please try again.');
+          setError(error.response.data.message || 'Login failed. Please try again.');
           console.error('Error has occurred', error);
         }
     }
@@ -39,6 +39,7 @@ function Login({ handleSignUp }: {handleSignUp: () => void}) {
                   placeholder="Username"
                   value= {inputUser}
                   onChange= {(e) => setInputUser(e.target.value)}
+                  autoComplete="off"
                 />
               </div>
               <div className="mb-6">
@@ -52,6 +53,7 @@ function Login({ handleSignUp }: {handleSignUp: () => void}) {
                   placeholder="Password"
                   value= {inputPass}
                   onChange= {(e) => setInputPass(e.target.value)}
+                  autoComplete="off"
                 />
               </div>
               <div className="flex items-center justify-between mb-6">
