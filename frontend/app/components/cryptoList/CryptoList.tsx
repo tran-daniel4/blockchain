@@ -32,7 +32,7 @@ function CryptoList() {
         const sortedData = data.sort((a: Crypto, b: Crypto) => b.market_cap - a.market_cap);
         setCryptos(sortedData);
 
-        const favResponse = await axios.get('http://localhost:5000/api/favorites', {
+        const favResponse = await axios.get('http://localhost:5000/api/tracked', {
           withCredentials: true,
         });
         setFavorites(favResponse.data.favorites || []);

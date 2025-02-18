@@ -129,8 +129,8 @@ export const getTrackedCryptos = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-
-        return res.status(200).json({ tracked_cryptos: user.tracked_cryptos });
+        const tracked = user.tracked_cryptos || [];
+        return res.status(200).json({ favorites: tracked });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error fetching tracked cryptos" });
